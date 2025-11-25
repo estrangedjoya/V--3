@@ -6,7 +6,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import useStore from '@/app/store';
 
-const API_URL = 'http://localhost:3001/api';
+const API_URL = 'https://v-e40n.onrender.com/api';
 
 export default function HomePage() {
   const router = useRouter();

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import useStore from '@/app/store';
 
-const API_URL = 'http://localhost:3001/api';
+const API_URL = 'https://v-e40n.onrender.com/api';
 
 export default function AuthPage() {
   const router = useRouter();
