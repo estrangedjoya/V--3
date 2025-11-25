@@ -97,6 +97,21 @@ export default function ProfilePage() {
     }
   };
 
+  const handleRemoveGame = async (gameId) => {
+    if (!confirm('Remove this game from your library? (Your drawings will remain public)')) return;
+
+    try {
+      await axios.delete(`${API_URL}/user/games/${gameId}`, {
+        headers: getAuthHeaders(),
+      });
+      alert('Game removed from library!');
+      fetchLibrary();
+    } catch (err) {
+      console.error('Error removing game:', err);
+      alert(`Failed to remove game: ${err.response?.data?.message || err.message}`);
+    }
+  };
+
   const filteredLibrary = library.filter((game) => {
     if (filter === 'all') return true;
     return game.status === filter;
@@ -267,13 +282,21 @@ export default function ProfilePage() {
                 )}
               </div>
 
-              {/* Post Drawing Button */}
-              <button
-                onClick={() => setSelectedGame(game)}
-                className="w-full mt-2 font-arcade text-xs py-2 border border-retro-border text-gray-400 hover:border-neon-pink hover:text-neon-pink transition-colors"
-              >
-                POST A DRAWING
-              </button>
+              {/* Action Buttons */}
+              <div className="flex gap-2 mt-2">
+                <button
+                  onClick={() => setSelectedGame(game)}
+                  className="flex-1 font-arcade text-xs py-2 border border-retro-border text-gray-400 hover:border-neon-pink hover:text-neon-pink transition-colors"
+                >
+                  POST A DRAWING
+                </button>
+                <button
+                  onClick={() => handleRemoveGame(game.id)}
+                  className="flex-1 font-arcade text-xs py-2 border border-retro-border text-gray-400 hover:border-red-500 hover:text-red-500 transition-colors"
+                >
+                  REMOVE
+                </button>
+              </div>
 
               {/* Drawings Gallery */}
               {game.customArt && game.customArt.length > 0 && (
