@@ -2,11 +2,44 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import useStore from '@/app/store';
+
+const API_URL = 'https://v-e40n.onrender.com/api';
 
 export default function Navbar() {
   const router = useRouter();
-  const { user, logout } = useStore();
+  const { user, logout, getAuthHeaders } = useStore();
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    if (!user) return;
+
+    const fetchUnreadCount = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/conversations`, {
+          headers: getAuthHeaders(),
+        });
+
+        // Count conversations where the last message wasn't sent by the current user
+        const unread = response.data.filter(conv => {
+          if (!conv.messages || conv.messages.length === 0) return false;
+          const lastMessage = conv.messages[conv.messages.length - 1];
+          return lastMessage.senderId !== user.id;
+        }).length;
+
+        setUnreadCount(unread);
+      } catch (err) {
+        console.error('Error fetching unread count:', err);
+      }
+    };
+
+    fetchUnreadCount();
+    // Poll every 10 seconds
+    const interval = setInterval(fetchUnreadCount, 10000);
+    return () => clearInterval(interval);
+  }, [user]);
 
   const handleLogout = () => {
     logout();
@@ -47,9 +80,14 @@ export default function Navbar() {
                 </Link>
                 <Link
                   href="/messages"
-                  className="font-arcade text-sm text-gray-300 hover:text-neon-cyan transition-colors"
+                  className="font-arcade text-sm text-gray-300 hover:text-neon-cyan transition-colors relative"
                 >
                   Messages
+                  {unreadCount > 0 && (
+                    <span className="absolute -top-2 -right-3 bg-neon-pink text-white text-xs font-pixel w-5 h-5 rounded-full flex items-center justify-center animate-pulse">
+                      {unreadCount > 9 ? '9+' : unreadCount}
+                    </span>
+                  )}
                 </Link>
                 <button
                   onClick={handleLogout}
