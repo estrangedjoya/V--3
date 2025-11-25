@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Press+Start+2P&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --neon-pink: #ff00ff;
+  --neon-cyan: #00ffff;
+  --neon-green: #00ff00;
+  --neon-purple: #9900ff;
+}
+
+body {
+  background: #0a0a0f;
+  color: #ffffff;
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Scanline effect overlay */
+.scanlines::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* CRT screen effect */
+.crt-effect {
+  animation: flicker 0.15s infinite;
+}
+
+/* Neon text effects */
+.neon-text-pink {
+  color: #ff00ff;
+  text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+}
+
+.neon-text-cyan {
+  color: #00ffff;
+  text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff;
+}
+
+.neon-text-green {
+  color: #00ff00;
+  text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;
+}
+
+.neon-text-purple {
+  color: #9900ff;
+  text-shadow: 0 0 5px #9900ff, 0 0 10px #9900ff, 0 0 20px #9900ff;
+}
+
+/* Neon border effects */
+.neon-border-pink {
+  border: 2px solid #ff00ff;
+  box-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff, inset 0 0 5px rgba(255, 0, 255, 0.1);
+}
+
+.neon-border-cyan {
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, inset 0 0 5px rgba(0, 255, 255, 0.1);
+}
+
+.neon-border-purple {
+  border: 2px solid #9900ff;
+  box-shadow: 0 0 5px #9900ff, 0 0 10px #9900ff, inset 0 0 5px rgba(153, 0, 255, 0.1);
+}
+
+/* Retro button styles */
+.retro-btn {
+  @apply px-6 py-3 font-arcade font-bold uppercase tracking-wider;
+  @apply bg-transparent border-2 border-neon-cyan text-neon-cyan;
+  @apply transition-all duration-200;
+  box-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+}
+
+.retro-btn:hover {
+  @apply bg-neon-cyan text-retro-dark;
+  box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff;
+}
+
+.retro-btn-pink {
+  @apply border-neon-pink text-neon-pink;
+  box-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff;
+}
+
+.retro-btn-pink:hover {
+  @apply bg-neon-pink text-retro-dark;
+  box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+}
+
+/* Retro input styles */
+.retro-input {
+  @apply w-full px-4 py-3 bg-retro-darker border-2 border-retro-border;
+  @apply text-white font-arcade;
+  @apply focus:outline-none focus:border-neon-cyan;
+  @apply transition-all duration-200;
+}
+
+.retro-input:focus {
+  box-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+}
+
+/* Card styles */
+.retro-card {
+  @apply bg-retro-card border-2 border-retro-border rounded-lg p-4;
+  @apply transition-all duration-200;
+}
+
+.retro-card:hover {
+  @apply border-neon-purple;
+  box-shadow: 0 0 10px rgba(153, 0, 255, 0.3);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #9900ff;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff00ff;
+}
+
+/* Grid background pattern */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(153, 0, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(153, 0, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Glitch effect for titles */
+.glitch {
+  position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch::before {
+  left: 2px;
+  text-shadow: -2px 0 #ff00ff;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+  left: -2px;
+  text-shadow: -2px 0 #00ffff;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim2 5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% { clip: rect(31px, 9999px, 94px, 0); }
+  20% { clip: rect(62px, 9999px, 42px, 0); }
+  40% { clip: rect(16px, 9999px, 78px, 0); }
+  60% { clip: rect(87px, 9999px, 55px, 0); }
+  80% { clip: rect(24px, 9999px, 35px, 0); }
+  100% { clip: rect(73px, 9999px, 12px, 0); }
+}
+
+@keyframes glitch-anim2 {
+  0% { clip: rect(65px, 9999px, 100px, 0); }
+  20% { clip: rect(12px, 9999px, 59px, 0); }
+  40% { clip: rect(48px, 9999px, 29px, 0); }
+  60% { clip: rect(36px, 9999px, 92px, 0); }
+  80% { clip: rect(79px, 9999px, 18px, 0); }
+  100% { clip: rect(53px, 9999px, 44px, 0); }
+}

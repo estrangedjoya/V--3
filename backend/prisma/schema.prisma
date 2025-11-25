@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int            @id @default(autoincrement())
+  email        String         @unique
+  username     String         @unique
+  password     String
+  createdAt    DateTime       @default(now())
+  games        UserGame[]
+  customArt    CustomArt[]
+  messages     Message[]
+  following    Follow[]       @relation("Following")
+  followers    Follow[]       @relation("Followers")
+  conversations1 Conversation[] @relation("User1")
+  conversations2 Conversation[] @relation("User2")
+  artLikes     ArtLike[]
+}
+
+model Game {
+  id        Int         @id @default(autoincrement())
+  apiId     String      @unique
+  name      String
+  imageUrl  String?
+  users     UserGame[]
+  customArt CustomArt[]
+}
+
+model UserGame {
+  userId        Int
+  gameId        Int
+  status        String
+  rating        Int?
+  reviewText    String?
+  createdAt     DateTime    @default(now())
+  favoritedArtId Int?       @unique
+  user          User        @relation(fields: [userId], references: [id])
+  game          Game        @relation(fields: [gameId], references: [id])
+  favoritedArt  CustomArt?  @relation(fields: [favoritedArtId], references: [id])
+
+  @@id([userId, gameId])
+}
+
+model CustomArt {
+  id          Int        @id @default(autoincrement())
+  imageUrl    String
+  gameId      Int
+  authorId    Int
+  createdAt   DateTime   @default(now())
+  game        Game       @relation(fields: [gameId], references: [id])
+  author      User       @relation(fields: [authorId], references: [id])
+  favoritedBy UserGame[]
+  likes       ArtLike[]
+}
+
+model ArtLike {
+  userId    Int
+  artId     Int
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  art       CustomArt @relation(fields: [artId], references: [id])
+
+  @@id([userId, artId])
+}
+
+model Follow {
+  followerId  Int
+  followingId Int
+  follower    User @relation("Following", fields: [followerId], references: [id])
+  following   User @relation("Followers", fields: [followingId], references: [id])
+
+  @@id([followerId, followingId])
+}
+
+model Conversation {
+  id        Int       @id @default(autoincrement())
+  user1Id   Int
+  user2Id   Int
+  createdAt DateTime  @default(now())
+  user1     User      @relation("User1", fields: [user1Id], references: [id])
+  user2     User      @relation("User2", fields: [user2Id], references: [id])
+  messages  Message[]
+
+  @@unique([user1Id, user2Id])
+}
+
+model Message {
+  id             Int          @id @default(autoincrement())
+  content        String?
+  imageUrl       String?
+  senderId       Int
+  conversationId Int
+  createdAt      DateTime     @default(now())
+  sender         User         @relation(fields: [senderId], references: [id])
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+}
