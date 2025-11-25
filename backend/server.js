@@ -558,9 +558,9 @@ app.get('/api/conversations', authenticateToken, async (req, res) => {
 
 app.post('/api/conversations', authenticateToken, async (req, res) => {
   const userId = req.user.userId;
-  const { otherUsername } = req.body;
+  const { recipientId } = req.body;
   try {
-    const otherUser = await prisma.user.findUnique({ where: { username: otherUsername } });
+    const otherUser = await prisma.user.findUnique({ where: { id: parseInt(recipientId) } });
     if (!otherUser) return res.status(404).json({ message: 'User not found' });
     if (otherUser.id === userId) return res.status(400).json({ message: 'Cannot message yourself' });
 
