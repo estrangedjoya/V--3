@@ -25,6 +25,13 @@ function MessagesContent() {
       return;
     }
     fetchConversations();
+
+    // Poll for new conversations every 5 seconds
+    const interval = setInterval(() => {
+      fetchConversations();
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, [user]);
 
   // Auto-start conversation if user param is present
@@ -40,6 +47,13 @@ function MessagesContent() {
   useEffect(() => {
     if (selectedConversation) {
       fetchMessages(selectedConversation.id);
+
+      // Poll for new messages every 3 seconds
+      const interval = setInterval(() => {
+        fetchMessages(selectedConversation.id);
+      }, 3000);
+
+      return () => clearInterval(interval);
     }
   }, [selectedConversation]);
 
