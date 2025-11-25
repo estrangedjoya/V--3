@@ -7,9 +7,6 @@ import useStore from '@/app/store';
 
 const API_URL = 'https://v-e40n.onrender.com/api';
 
-// Force dynamic rendering for this page
-export const dynamic = 'force-dynamic';
-
 function MessagesContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
