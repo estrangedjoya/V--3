@@ -84,12 +84,15 @@ function MessagesContent() {
 
   const fetchMessages = async (conversationId) => {
     try {
+      console.log('Fetching messages for conversation:', conversationId);
       const response = await axios.get(`${API_URL}/conversations/${conversationId}/messages`, {
         headers: getAuthHeaders(),
       });
+      console.log('Messages received:', response.data);
       setMessages(response.data);
     } catch (err) {
       console.error('Error fetching messages:', err);
+      console.error('Error details:', err.response?.data);
     }
   };
 
