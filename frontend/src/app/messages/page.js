@@ -30,7 +30,9 @@ function MessagesContent() {
   // Auto-start conversation if user param is present
   useEffect(() => {
     const targetUserId = searchParams.get('user');
+    console.log('Target user ID from URL:', targetUserId);
     if (targetUserId && user) {
+      console.log('Starting conversation with user:', targetUserId);
       startConversation(parseInt(targetUserId));
     }
   }, [searchParams, user]);
@@ -79,11 +81,13 @@ function MessagesContent() {
 
   const startConversation = async (userId) => {
     try {
+      console.log('Attempting to start conversation with userId:', userId);
       const response = await axios.post(
         `${API_URL}/conversations`,
         { recipientId: userId },
         { headers: getAuthHeaders() }
       );
+      console.log('Conversation response:', response.data);
       // Transform to expected format
       const conv = {
         ...response.data,
@@ -92,10 +96,12 @@ function MessagesContent() {
           { user: response.data.user2 }
         ]
       };
+      console.log('Setting selected conversation:', conv);
       setSelectedConversation(conv);
       fetchConversations();
     } catch (err) {
       console.error('Error starting conversation:', err);
+      console.error('Error details:', err.response?.data);
     }
   };
 
