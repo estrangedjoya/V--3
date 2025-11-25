@@ -160,6 +160,8 @@ export default function GamePage() {
         { headers: getAuthHeaders() }
       );
       setInLibrary(true);
+      // Refetch to get the internal gameId
+      await fetchGameDetails();
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to add to library');
     } finally {
