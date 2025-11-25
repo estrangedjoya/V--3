@@ -61,18 +61,22 @@ export default function ProfilePage() {
     formData.append('allowCropping', allowCropping);
 
     try {
-      await axios.post(`${API_URL}/user/games/upload-art`, formData, {
+      const response = await axios.post(`${API_URL}/user/games/upload-art`, formData, {
         headers: {
           ...getAuthHeaders(),
           'Content-Type': 'multipart/form-data',
         },
       });
+      console.log('Upload successful:', response.data);
+      alert('Drawing uploaded successfully!');
       setArtFile(null);
       setSelectedGame(null);
       setAllowCropping(true);
       fetchLibrary();
     } catch (err) {
       console.error('Error uploading art:', err);
+      console.error('Error response:', err.response?.data);
+      alert(`Upload failed: ${err.response?.data?.message || err.message}`);
     } finally {
       setUploading(false);
     }
