@@ -1,14 +1,15 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, useRef, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import axios from 'axios';
 import useStore from '@/app/store';
 
 const API_URL = 'https://v-e40n.onrender.com/api';
 
-export default function MessagesPage() {
+function MessagesContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { user, getAuthHeaders } = useStore();
   const [conversations, setConversations] = useState([]);
   const [selectedConversation, setSelectedConversation] = useState(null);
@@ -26,7 +27,13 @@ export default function MessagesPage() {
     fetchConversations();
   }, [user]);
 
-  // Removed searchParams functionality for simpler deployment
+  // Auto-start conversation if user param is present
+  useEffect(() => {
+    const targetUserId = searchParams.get('user');
+    if (targetUserId && user) {
+      startConversation(parseInt(targetUserId));
+    }
+  }, [searchParams, user]);
 
   useEffect(() => {
     if (selectedConversation) {
@@ -252,5 +259,19 @@ export default function MessagesPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function MessagesPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="font-pixel text-xl neon-text-cyan animate-pulse">
+          LOADING...
+        </div>
+      </div>
+    }>
+      <MessagesContent />
+    </Suspense>
   );
 }
