@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import axios from 'axios';
 import useStore from '@/app/store';
 
 const API_URL = 'https://v-e40n.onrender.com/api';
 
-export default function MessagesPage() {
+function MessagesContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { user, getAuthHeaders } = useStore();
@@ -259,5 +259,19 @@ export default function MessagesPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function MessagesPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="font-pixel text-xl neon-text-cyan animate-pulse">
+          LOADING...
+        </div>
+      </div>
+    }>
+      <MessagesContent />
+    </Suspense>
   );
 }
