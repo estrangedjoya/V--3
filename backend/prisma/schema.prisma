@@ -12,6 +12,8 @@ model User {
   email        String         @unique
   username     String         @unique
   password     String
+  bio          String?
+  bannerUrl    String?
   createdAt    DateTime       @default(now())
   games        UserGame[]
   customArt    CustomArt[]
@@ -21,6 +23,10 @@ model User {
   conversations1 Conversation[] @relation("User1")
   conversations2 Conversation[] @relation("User2")
   artLikes     ArtLike[]
+  comments     Comment[]
+  notifications Notification[]
+  gameCollections GameCollection[]
+  activities   Activity[]
 }
 
 model Game {
@@ -30,6 +36,7 @@ model Game {
   imageUrl  String?
   users     UserGame[]
   customArt CustomArt[]
+  collections CollectionGame[]
 }
 
 model UserGame {
@@ -52,11 +59,13 @@ model CustomArt {
   imageUrl    String
   gameId      Int
   authorId    Int
+  tags        String?
   createdAt   DateTime   @default(now())
   game        Game       @relation(fields: [gameId], references: [id])
   author      User       @relation(fields: [authorId], references: [id])
   favoritedBy UserGame[]
   likes       ArtLike[]
+  comments    Comment[]
 }
 
 model ArtLike {
@@ -99,4 +108,56 @@ model Message {
   createdAt      DateTime     @default(now())
   sender         User         @relation(fields: [senderId], references: [id])
   conversation   Conversation @relation(fields: [conversationId], references: [id])
+}
+
+model Comment {
+  id        Int       @id @default(autoincrement())
+  content   String
+  artId     Int
+  authorId  Int
+  createdAt DateTime  @default(now())
+  art       CustomArt @relation(fields: [artId], references: [id], onDelete: Cascade)
+  author    User      @relation(fields: [authorId], references: [id])
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  type      String
+  content   String
+  link      String?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model GameCollection {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  isPublic    Boolean  @default(true)
+  userId      Int
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+  games       CollectionGame[]
+}
+
+model CollectionGame {
+  collectionId Int
+  gameId       Int
+  addedAt      DateTime @default(now())
+  collection   GameCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  game         Game           @relation(fields: [gameId], references: [id])
+
+  @@id([collectionId, gameId])
+}
+
+model Activity {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  type      String
+  content   String
+  link      String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
 }

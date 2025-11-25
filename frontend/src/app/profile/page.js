@@ -16,6 +16,7 @@ export default function ProfilePage() {
   const [filter, setFilter] = useState('all');
   const [selectedGame, setSelectedGame] = useState(null);
   const [artFile, setArtFile] = useState(null);
+  const [artTags, setArtTags] = useState('');
   const [uploading, setUploading] = useState(false);
   const [allowCropping, setAllowCropping] = useState(true);
 
@@ -59,6 +60,9 @@ export default function ProfilePage() {
     formData.append('artFile', artFile);
     formData.append('gameId', selectedGame.id);
     formData.append('allowCropping', allowCropping);
+    if (artTags.trim()) {
+      formData.append('tags', artTags.trim());
+    }
 
     try {
       const response = await axios.post(`${API_URL}/user/games/upload-art`, formData, {
@@ -70,6 +74,7 @@ export default function ProfilePage() {
       console.log('Upload successful:', response.data);
       alert('Drawing uploaded successfully!');
       setArtFile(null);
+      setArtTags('');
       setSelectedGame(null);
       setAllowCropping(true);
       fetchLibrary();
@@ -344,6 +349,18 @@ export default function ProfilePage() {
                 onChange={(e) => setArtFile(e.target.files[0])}
                 className="w-full font-arcade text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:border-2 file:border-neon-cyan file:bg-transparent file:text-neon-cyan file:font-arcade file:text-xs"
               />
+              <div>
+                <label className="font-arcade text-xs text-gray-400 block mb-2">
+                  TAGS (OPTIONAL)
+                </label>
+                <input
+                  type="text"
+                  value={artTags}
+                  onChange={(e) => setArtTags(e.target.value)}
+                  placeholder="fan art, pixel art, sketch..."
+                  className="w-full bg-retro-darker border border-retro-border text-white font-arcade text-sm p-3 rounded focus:outline-none focus:border-neon-cyan"
+                />
+              </div>
               <label className="flex items-start gap-3 cursor-pointer">
                 <input
                   type="checkbox"

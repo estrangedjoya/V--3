@@ -3,7 +3,9 @@
     "allow": [
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(npx prisma migrate:*)",
+      "Bash(/home/dubliners.com/.nvm/versions/node/v22.12.0/bin/npx prisma migrate dev --name add_all_new_features)"
     ],
     "deny": [],
     "ask": []

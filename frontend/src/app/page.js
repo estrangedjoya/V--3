@@ -221,7 +221,7 @@ export default function HomePage() {
                   {followingDrawings.map((drawing) => (
                     <div
                       key={drawing.id}
-                      onClick={() => router.push(`/drawing/${drawing.id}`)}
+                      onClick={() => router.push(`/art/${drawing.id}`)}
                       className="retro-card p-2 cursor-pointer group"
                     >
                       <div className="relative aspect-square rounded overflow-hidden mb-2">
@@ -284,7 +284,7 @@ export default function HomePage() {
                 {hotDrawings.map((drawing) => (
                   <div
                     key={drawing.id}
-                    onClick={() => router.push(`/drawing/${drawing.id}`)}
+                    onClick={() => router.push(`/art/${drawing.id}`)}
                     className="retro-card p-2 cursor-pointer group"
                   >
                     <div className="relative aspect-square rounded overflow-hidden mb-2">

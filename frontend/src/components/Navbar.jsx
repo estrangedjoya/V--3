@@ -69,16 +69,28 @@ export default function Navbar() {
           </Link>
 
           {/* Navigation Links */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4">
             <Link
-              href="/"
+              href="/search"
               className="font-arcade text-sm text-gray-300 hover:text-neon-cyan transition-colors"
             >
               Search
             </Link>
+            <Link
+              href="/leaderboards"
+              className="font-arcade text-sm text-gray-300 hover:text-neon-cyan transition-colors"
+            >
+              Leaderboards
+            </Link>
 
             {user ? (
               <>
+                <Link
+                  href="/feed"
+                  className="font-arcade text-sm text-gray-300 hover:text-neon-cyan transition-colors"
+                >
+                  Feed
+                </Link>
                 <Link
                   href="/profile"
                   className="font-arcade text-sm text-gray-300 hover:text-neon-cyan transition-colors"
@@ -86,10 +98,16 @@ export default function Navbar() {
                   Library
                 </Link>
                 <Link
-                  href={`/users/${user.username}`}
+                  href="/collections"
                   className="font-arcade text-sm text-gray-300 hover:text-neon-cyan transition-colors"
                 >
-                  Profile
+                  Collections
+                </Link>
+                <Link
+                  href="/notifications"
+                  className="font-arcade text-sm text-gray-300 hover:text-neon-cyan transition-colors"
+                >
+                  Notifications
                 </Link>
                 <Link
                   href="/messages"

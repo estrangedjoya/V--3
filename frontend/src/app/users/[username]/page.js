@@ -63,21 +63,17 @@ export default function UserProfilePage() {
 
     try {
       if (isFollowing) {
-        await axios.post(
-          `${API_URL}/users/unfollow`,
-          { followingUsername: profile.username },
-          { headers: getAuthHeaders() }
-        );
+        await axios.delete(`${API_URL}/users/${profile.id}/follow`, {
+          headers: getAuthHeaders()
+        });
         setIsFollowing(false);
-        setFollowers(followers.filter((f) => f.follower.id !== user.id));
+        setFollowers(followers.filter((f) => f.id !== user.id));
       } else {
-        await axios.post(
-          `${API_URL}/users/follow`,
-          { followingUsername: profile.username },
-          { headers: getAuthHeaders() }
-        );
+        await axios.post(`${API_URL}/users/${profile.id}/follow`, {}, {
+          headers: getAuthHeaders()
+        });
         setIsFollowing(true);
-        setFollowers([...followers, { follower: user }]);
+        setFollowers([...followers, user]);
       }
     } catch (err) {
       console.error('Error toggling follow:', err);
