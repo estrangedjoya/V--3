@@ -16,18 +16,31 @@ export default function Navbar() {
   useEffect(() => {
     if (!user) return;
 
+    const hasUnreadMessages = (conversation) => {
+      if (!conversation.messages || conversation.messages.length === 0) return false;
+      const lastMessage = conversation.messages[conversation.messages.length - 1];
+
+      // Not unread if you sent the last message
+      if (lastMessage.senderId === user.id) return false;
+
+      // Check localStorage for last read time
+      const lastReadKey = `lastRead_${user.id}_${conversation.id}`;
+      const lastReadTime = localStorage.getItem(lastReadKey);
+
+      if (!lastReadTime) return true; // Never read
+
+      // Check if last message is newer than last read time
+      return new Date(lastMessage.createdAt) > new Date(lastReadTime);
+    };
+
     const fetchUnreadCount = async () => {
       try {
         const response = await axios.get(`${API_URL}/conversations`, {
           headers: getAuthHeaders(),
         });
 
-        // Count conversations where the last message wasn't sent by the current user
-        const unread = response.data.filter(conv => {
-          if (!conv.messages || conv.messages.length === 0) return false;
-          const lastMessage = conv.messages[conv.messages.length - 1];
-          return lastMessage.senderId !== user.id;
-        }).length;
+        // Count conversations with unread messages
+        const unread = response.data.filter(hasUnreadMessages).length;
 
         setUnreadCount(unread);
       } catch (err) {

@@ -48,6 +48,10 @@ function MessagesContent() {
     if (selectedConversation) {
       fetchMessages(selectedConversation.id);
 
+      // Mark conversation as read in localStorage
+      const lastReadKey = `lastRead_${user?.id}_${selectedConversation.id}`;
+      localStorage.setItem(lastReadKey, new Date().toISOString());
+
       // Poll for new messages every 3 seconds
       const interval = setInterval(() => {
         fetchMessages(selectedConversation.id);
@@ -94,6 +98,23 @@ function MessagesContent() {
       console.error('Error fetching messages:', err);
       console.error('Error details:', err.response?.data);
     }
+  };
+
+  const hasUnreadMessages = (conversation) => {
+    if (!conversation.messages || conversation.messages.length === 0) return false;
+    const lastMessage = conversation.messages[conversation.messages.length - 1];
+
+    // Not unread if you sent the last message
+    if (lastMessage.senderId === user?.id) return false;
+
+    // Check localStorage for last read time
+    const lastReadKey = `lastRead_${user?.id}_${conversation.id}`;
+    const lastReadTime = localStorage.getItem(lastReadKey);
+
+    if (!lastReadTime) return true; // Never read
+
+    // Check if last message is newer than last read time
+    return new Date(lastMessage.createdAt) > new Date(lastReadTime);
   };
 
   const startConversation = async (userId) => {
@@ -176,6 +197,7 @@ function MessagesContent() {
             ) : (
               conversations.map((conv) => {
                 const otherUser = getOtherParticipant(conv);
+                const isUnread = hasUnreadMessages(conv);
                 return (
                   <div
                     key={conv.id}
@@ -187,17 +209,25 @@ function MessagesContent() {
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-retro-darker border border-neon-purple flex items-center justify-center flex-shrink-0">
+                      <div className="w-10 h-10 rounded-full bg-retro-darker border border-neon-purple flex items-center justify-center flex-shrink-0 relative">
                         <span className="font-pixel text-sm text-neon-purple">
                           {otherUser?.username[0].toUpperCase()}
                         </span>
+                        {isUnread && (
+                          <span className="absolute -top-1 -right-1 w-3 h-3 bg-neon-pink rounded-full animate-pulse"></span>
+                        )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-arcade text-sm text-white truncate">
-                          {otherUser?.username}
-                        </p>
+                        <div className="flex items-center gap-2">
+                          <p className={`font-arcade text-sm truncate ${isUnread ? 'text-white font-bold' : 'text-white'}`}>
+                            {otherUser?.username}
+                          </p>
+                          {isUnread && (
+                            <span className="font-pixel text-xs text-neon-pink">NEW</span>
+                          )}
+                        </div>
                         {conv.messages && conv.messages[0] && (
-                          <p className="font-arcade text-xs text-gray-500 truncate">
+                          <p className={`font-arcade text-xs truncate ${isUnread ? 'text-gray-300' : 'text-gray-500'}`}>
                             {conv.messages[0].content}
                           </p>
                         )}
