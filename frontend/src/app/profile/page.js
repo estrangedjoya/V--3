@@ -82,6 +82,21 @@ export default function ProfilePage() {
     }
   };
 
+  const handleDeleteArt = async (artId) => {
+    if (!confirm('Are you sure you want to delete this drawing?')) return;
+
+    try {
+      await axios.delete(`${API_URL}/art/${artId}`, {
+        headers: getAuthHeaders(),
+      });
+      alert('Drawing deleted successfully!');
+      fetchLibrary();
+    } catch (err) {
+      console.error('Error deleting art:', err);
+      alert(`Delete failed: ${err.response?.data?.message || err.message}`);
+    }
+  };
+
   const filteredLibrary = library.filter((game) => {
     if (filter === 'all') return true;
     return game.status === filter;
@@ -266,13 +281,19 @@ export default function ProfilePage() {
                   <p className="font-arcade text-xs text-neon-purple mb-2">DRAWINGS</p>
                   <div className="grid grid-cols-3 gap-2">
                     {game.customArt.slice(0, 3).map((art) => (
-                      <div key={art.id} className="relative aspect-square rounded overflow-hidden">
+                      <div key={art.id} className="relative aspect-square rounded overflow-hidden group">
                         <Image
                           src={art.imageUrl}
                           alt="Drawing"
                           fill
                           className="object-cover"
                         />
+                        <button
+                          onClick={() => handleDeleteArt(art.id)}
+                          className="absolute top-1 right-1 bg-red-500/80 hover:bg-red-600 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          ✕
+                        </button>
                       </div>
                     ))}
                   </div>
