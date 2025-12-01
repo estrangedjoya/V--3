@@ -8,79 +8,77 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        neon: {
-          pink: '#ff00ff',
-          cyan: '#00ffff',
-          green: '#00ff00',
-          yellow: '#ffff00',
-          orange: '#ff6600',
-          purple: '#9900ff',
-        },
-        retro: {
-          dark: '#0a0a0f',
-          darker: '#050508',
-          card: '#12121a',
-          border: '#2a2a3a',
-        },
-        // Light Blue Theme Colors
-        blue: {
-          50: '#e6f7ff',
-          100: '#bae7ff',
-          200: '#91d5ff',
-          300: '#69c0ff',
-          400: '#40a9ff',
-          500: '#1890ff',
-          600: '#096dd9',
-          700: '#0050b3',
-          800: '#003a8c',
-          900: '#002766',
+        toy: {
+          red: '#E63946',
+          'red-dark': '#C52A35',
+          'red-darker': '#A01F28',
+          blue: '#457B9D',
+          'blue-dark': '#355F7A',
+          'blue-darker': '#2A4A5F',
+          yellow: '#FFD700',
+          'yellow-dark': '#E6C200',
+          'yellow-darker': '#CCA700',
+          purple: '#A8DADC',
+          orange: '#F4A261',
+          green: '#7EC850',
         },
         sky: {
-          light: '#e0f2fe',
-          DEFAULT: '#7dd3fc',
-          medium: '#38bdf8',
-          dark: '#0284c7',
-          darker: '#0369a1',
+          light: '#B4E4FF',
+          DEFAULT: '#87CEEB',
+          bright: '#5DADE2',
         },
-        ocean: {
-          light: '#cffafe',
-          DEFAULT: '#06b6d4',
-          medium: '#0891b2',
-          dark: '#0e7490',
-          darker: '#155e75',
+        cloud: {
+          white: '#FFFFFF',
+          light: '#F8F9FA',
         }
       },
       fontFamily: {
-        pixel: ['"Press Start 2P"', 'cursive'],
-        arcade: ['"Orbitron"', 'sans-serif'],
+        playful: ['"Baloo 2"', 'cursive'],
+        comic: ['"Comic Neue"', 'cursive'],
+        fredoka: ['"Fredoka"', 'sans-serif'],
       },
       boxShadow: {
-        'neon-pink': '0 0 5px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff',
-        'neon-cyan': '0 0 5px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff',
-        'neon-green': '0 0 5px #00ff00, 0 0 20px #00ff00, 0 0 40px #00ff00',
-        'neon-purple': '0 0 5px #9900ff, 0 0 20px #9900ff, 0 0 40px #9900ff',
-        // Light Blue Glow Effects
-        'glow-blue': '0 0 5px #1890ff, 0 0 20px #1890ff, 0 0 40px #1890ff',
-        'glow-sky': '0 0 5px #38bdf8, 0 0 20px #38bdf8, 0 0 40px #38bdf8',
-        'glow-ocean': '0 0 5px #06b6d4, 0 0 20px #06b6d4, 0 0 40px #06b6d4',
+        'toy': '8px 8px 0px rgba(69, 123, 157, 0.3)',
+        'toy-hover': '12px 12px 0px rgba(230, 57, 70, 0.3)',
+        'btn-red': '0 6px 0 #A01F28',
+        'btn-blue': '0 6px 0 #2A4A5F',
+        'btn-yellow': '0 6px 0 #CCA700',
       },
       animation: {
-        'glow': 'glow 2s ease-in-out infinite alternate',
-        'flicker': 'flicker 0.15s infinite',
-        'scan': 'scan 8s linear infinite',
+        'drift': 'drift linear infinite',
+        'float': 'float 3s ease-in-out infinite',
+        'bounce-in': 'bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+        'wobble': 'wobble 0.5s ease-in-out',
       },
       keyframes: {
-        glow: {
-          '0%': { textShadow: '0 0 5px #1890ff, 0 0 10px #1890ff' },
-          '100%': { textShadow: '0 0 10px #38bdf8, 0 0 20px #38bdf8, 0 0 30px #38bdf8' },
+        drift: {
+          'from': { transform: 'translateX(-200px)' },
+          'to': { transform: 'translateX(calc(100vw + 200px))' },
         },
-        flicker: {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.8' },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-10px)' },
         },
-        scan: {
-          '0%': { transform: 'translateY(-100%)' },
-          '100%': { transform: 'translateY(100%)' },
+        bounceIn: {
+          '0%': {
+            opacity: '0',
+            transform: 'scale(0.3) rotate(-10deg)'
+          },
+          '50%': {
+            opacity: '1',
+            transform: 'scale(1.05) rotate(5deg)'
+          },
+          '70%': {
+            transform: 'scale(0.9) rotate(-2deg)'
+          },
+          '100%': {
+            transform: 'scale(1) rotate(0deg)'
+          },
+        },
+        wobble: {
+          '0%, 100%': { transform: 'rotate(0deg)' },
+          '25%': { transform: 'rotate(-5deg)' },
+          '75%': { transform: 'rotate(5deg)' },
         },
       },
     },
