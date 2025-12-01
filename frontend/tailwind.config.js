@@ -21,6 +21,33 @@ module.exports = {
           darker: '#050508',
           card: '#12121a',
           border: '#2a2a3a',
+        },
+        // Light Blue Theme Colors
+        blue: {
+          50: '#e6f7ff',
+          100: '#bae7ff',
+          200: '#91d5ff',
+          300: '#69c0ff',
+          400: '#40a9ff',
+          500: '#1890ff',
+          600: '#096dd9',
+          700: '#0050b3',
+          800: '#003a8c',
+          900: '#002766',
+        },
+        sky: {
+          light: '#e0f2fe',
+          DEFAULT: '#7dd3fc',
+          medium: '#38bdf8',
+          dark: '#0284c7',
+          darker: '#0369a1',
+        },
+        ocean: {
+          light: '#cffafe',
+          DEFAULT: '#06b6d4',
+          medium: '#0891b2',
+          dark: '#0e7490',
+          darker: '#155e75',
         }
       },
       fontFamily: {
@@ -32,6 +59,10 @@ module.exports = {
         'neon-cyan': '0 0 5px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff',
         'neon-green': '0 0 5px #00ff00, 0 0 20px #00ff00, 0 0 40px #00ff00',
         'neon-purple': '0 0 5px #9900ff, 0 0 20px #9900ff, 0 0 40px #9900ff',
+        // Light Blue Glow Effects
+        'glow-blue': '0 0 5px #1890ff, 0 0 20px #1890ff, 0 0 40px #1890ff',
+        'glow-sky': '0 0 5px #38bdf8, 0 0 20px #38bdf8, 0 0 40px #38bdf8',
+        'glow-ocean': '0 0 5px #06b6d4, 0 0 20px #06b6d4, 0 0 40px #06b6d4',
       },
       animation: {
         'glow': 'glow 2s ease-in-out infinite alternate',
@@ -40,8 +71,8 @@ module.exports = {
       },
       keyframes: {
         glow: {
-          '0%': { textShadow: '0 0 5px #ff00ff, 0 0 10px #ff00ff' },
-          '100%': { textShadow: '0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff' },
+          '0%': { textShadow: '0 0 5px #1890ff, 0 0 10px #1890ff' },
+          '100%': { textShadow: '0 0 10px #38bdf8, 0 0 20px #38bdf8, 0 0 30px #38bdf8' },
         },
         flicker: {
           '0%, 100%': { opacity: '1' },

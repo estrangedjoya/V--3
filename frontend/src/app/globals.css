@@ -9,6 +9,11 @@
   --neon-cyan: #00ffff;
   --neon-green: #00ff00;
   --neon-purple: #9900ff;
+  /* Light Blue Theme Variables */
+  --blue-primary: #1890ff;
+  --blue-light: #69c0ff;
+  --sky-main: #38bdf8;
+  --ocean-main: #06b6d4;
 }
 
 body {
@@ -62,6 +67,22 @@ body {
   text-shadow: 0 0 5px #9900ff, 0 0 10px #9900ff, 0 0 20px #9900ff;
 }
 
+/* Light Blue Text Effects */
+.neon-text-blue {
+  color: #1890ff;
+  text-shadow: 0 0 5px #1890ff, 0 0 10px #1890ff, 0 0 20px #1890ff;
+}
+
+.neon-text-sky {
+  color: #38bdf8;
+  text-shadow: 0 0 5px #38bdf8, 0 0 10px #38bdf8, 0 0 20px #38bdf8;
+}
+
+.neon-text-ocean {
+  color: #06b6d4;
+  text-shadow: 0 0 5px #06b6d4, 0 0 10px #06b6d4, 0 0 20px #06b6d4;
+}
+
 /* Neon border effects */
 .neon-border-pink {
   border: 2px solid #ff00ff;
@@ -76,6 +97,22 @@ body {
 .neon-border-purple {
   border: 2px solid #9900ff;
   box-shadow: 0 0 5px #9900ff, 0 0 10px #9900ff, inset 0 0 5px rgba(153, 0, 255, 0.1);
+}
+
+/* Light Blue Border Effects */
+.neon-border-blue {
+  border: 2px solid #1890ff;
+  box-shadow: 0 0 5px #1890ff, 0 0 10px #1890ff, inset 0 0 5px rgba(24, 144, 255, 0.1);
+}
+
+.neon-border-sky {
+  border: 2px solid #38bdf8;
+  box-shadow: 0 0 5px #38bdf8, 0 0 10px #38bdf8, inset 0 0 5px rgba(56, 189, 248, 0.1);
+}
+
+.neon-border-ocean {
+  border: 2px solid #06b6d4;
+  box-shadow: 0 0 5px #06b6d4, 0 0 10px #06b6d4, inset 0 0 5px rgba(6, 182, 212, 0.1);
 }
 
 /* Retro button styles */
@@ -99,6 +136,35 @@ body {
 .retro-btn-pink:hover {
   @apply bg-neon-pink text-retro-dark;
   box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+}
+
+/* Light Blue Button Styles */
+.retro-btn-blue {
+  @apply px-6 py-3 font-arcade font-bold uppercase tracking-wider;
+  @apply bg-transparent border-2 text-blue-500;
+  @apply transition-all duration-200;
+  border-color: #1890ff;
+  box-shadow: 0 0 5px #1890ff, 0 0 10px #1890ff;
+}
+
+.retro-btn-blue:hover {
+  background-color: #1890ff;
+  @apply text-retro-dark;
+  box-shadow: 0 0 10px #1890ff, 0 0 20px #1890ff, 0 0 40px #1890ff;
+}
+
+.retro-btn-sky {
+  @apply px-6 py-3 font-arcade font-bold uppercase tracking-wider;
+  @apply bg-transparent border-2 transition-all duration-200;
+  border-color: #38bdf8;
+  color: #38bdf8;
+  box-shadow: 0 0 5px #38bdf8, 0 0 10px #38bdf8;
+}
+
+.retro-btn-sky:hover {
+  background-color: #38bdf8;
+  @apply text-retro-dark;
+  box-shadow: 0 0 10px #38bdf8, 0 0 20px #38bdf8, 0 0 40px #38bdf8;
 }
 
 /* Retro input styles */
@@ -147,6 +213,14 @@ body {
   background-image:
     linear-gradient(rgba(153, 0, 255, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(153, 0, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Light Blue Grid Background */
+.grid-bg-blue {
+  background-image:
+    linear-gradient(rgba(24, 144, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(24, 144, 255, 0.1) 1px, transparent 1px);
   background-size: 50px 50px;
 }
 

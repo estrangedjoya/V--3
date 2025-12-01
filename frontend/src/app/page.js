@@ -114,9 +114,9 @@ export default function HomePage() {
       {/* Hero Section */}
       <div className="text-center py-12">
         <h1 className="font-pixel text-5xl mb-4 glitch" data-text="V~">
-          <span className="neon-text-pink">V~</span>
+          <span className="neon-text-blue">V~</span>
         </h1>
-        <p className="font-arcade text-lg text-neon-cyan mb-8">
+        <p className="font-arcade text-lg neon-text-sky mb-8">
           TRACK YOUR GAMES • SHARE THE ART • CONNECT WITH PEOPLE
         </p>
       </div>
@@ -135,7 +135,7 @@ export default function HomePage() {
           <button
             type="submit"
             disabled={loading}
-            className="absolute right-2 top-1/2 -translate-y-1/2 retro-btn py-2 px-4 text-xs"
+            className="absolute right-2 top-1/2 -translate-y-1/2 retro-btn-blue py-2 px-4 text-xs"
           >
             {loading ? '...' : 'SEARCH'}
           </button>
@@ -182,7 +182,7 @@ export default function HomePage() {
             </div>
 
             {/* Game Info */}
-            <h3 className="font-arcade text-sm text-white mb-2 line-clamp-2 group-hover:text-neon-cyan transition-colors">
+            <h3 className="font-arcade text-sm text-white mb-2 line-clamp-2 group-hover:text-sky-medium transition-colors">
               {game.name}
             </h3>
             {game.original_release_date && (
@@ -201,7 +201,7 @@ export default function HomePage() {
           {user && (
             <div className="mt-16">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="font-pixel text-2xl neon-text-cyan">
+                <h2 className="font-pixel text-2xl neon-text-sky">
                   ARTISTS YOU FOLLOW
                 </h2>
               </div>
@@ -211,7 +211,7 @@ export default function HomePage() {
                   <span className="font-arcade text-gray-400 animate-pulse">LOADING...</span>
                 </div>
               ) : followingDrawings.length === 0 ? (
-                <div className="retro-card neon-border-purple p-8 text-center">
+                <div className="retro-card neon-border-blue p-8 text-center">
                   <p className="font-arcade text-gray-400">
                     NO DRAWINGS FROM ARTISTS YOU FOLLOW YET
                   </p>
@@ -233,7 +233,7 @@ export default function HomePage() {
                         />
                       </div>
                       <div className="space-y-1">
-                        <p className="font-arcade text-xs text-white line-clamp-1 group-hover:text-neon-cyan transition-colors">
+                        <p className="font-arcade text-xs text-white line-clamp-1 group-hover:text-sky-medium transition-colors">
                           {drawing.game?.name || 'Unknown Game'}
                         </p>
                         <div className="flex items-center justify-between">
@@ -246,7 +246,7 @@ export default function HomePage() {
                               handleLikeDrawing(drawing.id, drawing.isLiked, true);
                             }}
                             className={`font-arcade text-xs flex items-center gap-1 transition-colors ${
-                              drawing.isLiked ? 'text-neon-pink' : 'text-gray-500 hover:text-neon-pink'
+                              drawing.isLiked ? 'text-sky-medium' : 'text-gray-500 hover:text-sky-medium'
                             }`}
                           >
                             <span className="text-sm">{drawing.isLiked ? '♥' : '♡'}</span>
@@ -264,7 +264,7 @@ export default function HomePage() {
           {/* Famous Drawings Section - Always show */}
           <div className="mt-16">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="font-pixel text-2xl neon-text-pink">
+              <h2 className="font-pixel text-2xl neon-text-blue">
                 FAMOUS DRAWINGS
               </h2>
             </div>
@@ -274,7 +274,7 @@ export default function HomePage() {
                 <span className="font-arcade text-gray-400 animate-pulse">LOADING...</span>
               </div>
             ) : hotDrawings.length === 0 ? (
-              <div className="retro-card neon-border-purple p-8 text-center">
+              <div className="retro-card neon-border-blue p-8 text-center">
                 <p className="font-arcade text-gray-400">
                   NO DRAWINGS YET - BE THE FIRST TO POST!
                 </p>
@@ -296,7 +296,7 @@ export default function HomePage() {
                       />
                     </div>
                     <div className="space-y-1">
-                      <p className="font-arcade text-xs text-white line-clamp-1 group-hover:text-neon-cyan transition-colors">
+                      <p className="font-arcade text-xs text-white line-clamp-1 group-hover:text-sky-medium transition-colors">
                         {drawing.game?.name || 'Unknown Game'}
                       </p>
                       <div className="flex items-center justify-between">
@@ -309,7 +309,7 @@ export default function HomePage() {
                             handleLikeDrawing(drawing.id, drawing.isLiked, false);
                           }}
                           className={`font-arcade text-xs flex items-center gap-1 transition-colors ${
-                            drawing.isLiked ? 'text-neon-pink' : 'text-gray-500 hover:text-neon-pink'
+                            drawing.isLiked ? 'text-sky-medium' : 'text-gray-500 hover:text-sky-medium'
                           }`}
                         >
                           <span className="text-sm">{drawing.isLiked ? '♥' : '♡'}</span>
