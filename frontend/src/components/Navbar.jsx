@@ -60,79 +60,79 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-lg border-b-4 border-toy-blue">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-retro-darker/95 backdrop-blur-sm border-b-2 border-neon-purple">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 wobble">
-            <span className="font-playful text-4xl toy-text-blue">V~</span>
+          <Link href="/" className="flex items-center gap-2">
+            <span className="font-pixel text-2xl neon-text-pink">V~</span>
           </Link>
 
           {/* Navigation Links */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <Link
               href="/search"
-              className="font-fredoka font-semibold text-base px-4 py-2 rounded-full hover:bg-toy-purple/30 transition-all text-toy-blue hover:scale-105"
+              className="font-arcade text-sm text-gray-300 hover:text-neon-cyan transition-colors"
             >
-              🔍 Search
+              Search
             </Link>
             <Link
               href="/leaderboards"
-              className="font-fredoka font-semibold text-base px-4 py-2 rounded-full hover:bg-toy-purple/30 transition-all text-toy-blue hover:scale-105"
+              className="font-arcade text-sm text-gray-300 hover:text-neon-cyan transition-colors"
             >
-              🏆 Leaders
+              Leaderboards
             </Link>
 
             {user ? (
               <>
                 <Link
                   href="/feed"
-                  className="font-fredoka font-semibold text-base px-4 py-2 rounded-full hover:bg-toy-purple/30 transition-all text-toy-blue hover:scale-105"
+                  className="font-arcade text-sm text-gray-300 hover:text-neon-cyan transition-colors"
                 >
-                  📰 Feed
+                  Feed
                 </Link>
                 <Link
                   href="/profile"
-                  className="font-fredoka font-semibold text-base px-4 py-2 rounded-full hover:bg-toy-purple/30 transition-all text-toy-blue hover:scale-105"
+                  className="font-arcade text-sm text-gray-300 hover:text-neon-cyan transition-colors"
                 >
-                  🎮 Library
+                  Library
                 </Link>
                 <Link
                   href="/collections"
-                  className="font-fredoka font-semibold text-base px-4 py-2 rounded-full hover:bg-toy-purple/30 transition-all text-toy-blue hover:scale-105"
+                  className="font-arcade text-sm text-gray-300 hover:text-neon-cyan transition-colors"
                 >
-                  📚 Collections
+                  Collections
                 </Link>
                 <Link
                   href="/notifications"
-                  className="font-fredoka font-semibold text-base px-4 py-2 rounded-full hover:bg-toy-purple/30 transition-all text-toy-blue hover:scale-105"
+                  className="font-arcade text-sm text-gray-300 hover:text-neon-cyan transition-colors"
                 >
-                  🔔 Alerts
+                  Notifications
                 </Link>
                 <Link
                   href="/messages"
-                  className="font-fredoka font-semibold text-base px-4 py-2 rounded-full hover:bg-toy-purple/30 transition-all text-toy-blue hover:scale-105 relative"
+                  className="font-arcade text-sm text-gray-300 hover:text-neon-cyan transition-colors relative"
                 >
-                  💬 Chat
+                  Messages
                   {unreadCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-toy-red text-white text-xs font-fredoka font-bold min-w-[24px] h-6 rounded-full flex items-center justify-center animate-bounce px-2">
+                    <span className="absolute -top-2 -right-3 bg-neon-pink text-white text-xs font-pixel w-5 h-5 rounded-full flex items-center justify-center animate-pulse">
                       {unreadCount > 9 ? '9+' : unreadCount}
                     </span>
                   )}
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="font-fredoka font-bold text-base px-5 py-2 rounded-full bg-toy-red text-white hover:bg-toy-red-dark transition-all hover:scale-105"
+                  className="font-arcade text-sm text-neon-pink hover:text-white transition-colors"
                 >
-                  👋 Logout
+                  Logout
                 </button>
               </>
             ) : (
               <Link
                 href="/auth"
-                className="toy-btn-blue text-sm py-2 px-6"
+                className="retro-btn text-xs py-2 px-4"
               >
-                🚀 Login
+                Login
               </Link>
             )}
           </div>

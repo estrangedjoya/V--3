@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import Image from 'next/image';
 import useStore from '@/app/store';
-import CloudBackground from '@/components/CloudBackground';
 
 const API_URL = 'https://v-e40n.onrender.com/api';
 
@@ -111,149 +110,134 @@ export default function HomePage() {
   };
 
   return (
-    <>
-      <CloudBackground />
-      <div className="max-w-6xl mx-auto px-4 pt-28 pb-12">
-        {/* Hero Section */}
-        <div className="text-center py-16 bounce-in">
-          <h1 className="font-playful text-7xl mb-6 playful-title float">
-            V~
-          </h1>
-          <p className="font-fredoka text-2xl font-semibold mb-4" style={{ color: '#457B9D' }}>
-            Track Your Games • Share Your Art • Connect With Friends
-          </p>
-          <div className="flex gap-3 justify-center flex-wrap">
-            <span className="badge wobble">🎮 Games</span>
-            <span className="badge wobble" style={{ animationDelay: '0.1s' }}>🎨 Art</span>
-            <span className="badge wobble" style={{ animationDelay: '0.2s' }}>👥 Friends</span>
-          </div>
+    <div className="max-w-6xl mx-auto">
+      {/* Hero Section */}
+      <div className="text-center py-12">
+        <h1 className="font-pixel text-5xl mb-4 glitch" data-text="V~">
+          <span className="neon-text-pink">V~</span>
+        </h1>
+        <p className="font-arcade text-lg text-neon-cyan mb-8">
+          TRACK YOUR GAMES • SHARE THE ART • CONNECT WITH PEOPLE
+        </p>
+      </div>
+
+      {/* Search Section */}
+      <div className="max-w-2xl mx-auto mb-12">
+        <form onSubmit={handleSearch} className="relative">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Search for games..."
+            className="retro-input text-lg pr-24"
+          />
+          <button
+            type="submit"
+            disabled={loading}
+            className="absolute right-2 top-1/2 -translate-y-1/2 retro-btn py-2 px-4 text-xs"
+          >
+            {loading ? '...' : 'SEARCH'}
+          </button>
+        </form>
+      </div>
+
+      {/* Error */}
+      {error && (
+        <div className="text-center text-neon-pink font-arcade mb-8">
+          {error}
         </div>
+      )}
 
-        {/* Search Section */}
-        <div className="max-w-2xl mx-auto mb-16">
-          <form onSubmit={handleSearch} className="relative">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Search for awesome games! 🎮"
-              className="toy-input text-lg pr-32"
-            />
-            <button
-              type="submit"
-              disabled={loading}
-              className="absolute right-2 top-1/2 -translate-y-1/2 toy-btn-yellow py-3 px-6 text-sm"
-            >
-              {loading ? '...' : 'SEARCH'}
-            </button>
-          </form>
+      {/* Results */}
+      {hasSearched && !loading && results.length === 0 && !error && (
+        <div className="text-center text-gray-400 font-arcade">
+          NO GAMES FOUND
         </div>
+      )}
 
-        {/* Error */}
-        {error && (
-          <div className="text-center text-toy-red font-fredoka font-bold text-xl mb-8">
-            {error}
-          </div>
-        )}
-
-        {/* Results */}
-        {hasSearched && !loading && results.length === 0 && !error && (
-          <div className="sticker-border text-center py-8 max-w-md mx-auto">
-            <p className="font-comic text-xl text-gray-600">
-              😢 No games found! Try another search
-            </p>
-          </div>
-        )}
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {results.map((game, index) => (
-            <div
-              key={game.id}
-              onClick={() => router.push(`/game/${game.id}`)}
-              className="toy-card cursor-pointer wobble"
-              style={{ animationDelay: `${index * 0.05}s` }}
-            >
-              {/* Game Image */}
-              <div className="relative aspect-[3/4] mb-4 overflow-hidden rounded-xl">
-                {game.image?.medium_url ? (
-                  <Image
-                    src={game.image.medium_url}
-                    alt={game.name}
-                    fill
-                    className="object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-toy-purple to-toy-blue flex items-center justify-center">
-                    <span className="font-playful text-2xl">🎮</span>
-                  </div>
-                )}
-              </div>
-
-              {/* Game Info */}
-              <h3 className="font-fredoka font-semibold text-base text-toy-blue mb-2 line-clamp-2">
-                {game.name}
-              </h3>
-              {game.original_release_date && (
-                <p className="font-fredoka text-sm text-gray-500 font-medium">
-                  {new Date(game.original_release_date).getFullYear()}
-                </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {results.map((game) => (
+          <div
+            key={game.id}
+            onClick={() => router.push(`/game/${game.id}`)}
+            className="retro-card cursor-pointer group"
+          >
+            {/* Game Image */}
+            <div className="relative aspect-[3/4] mb-4 overflow-hidden rounded">
+              {game.image?.medium_url ? (
+                <Image
+                  src={game.image.medium_url}
+                  alt={game.name}
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+              ) : (
+                <div className="w-full h-full bg-retro-darker flex items-center justify-center">
+                  <span className="font-pixel text-xs text-gray-500">NO IMAGE</span>
+                </div>
               )}
+              {/* Hover overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-retro-dark/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
-          ))}
-        </div>
+
+            {/* Game Info */}
+            <h3 className="font-arcade text-sm text-white mb-2 line-clamp-2 group-hover:text-neon-cyan transition-colors">
+              {game.name}
+            </h3>
+            {game.original_release_date && (
+              <p className="font-arcade text-xs text-gray-500">
+                {new Date(game.original_release_date).getFullYear()}
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
 
       {/* Drawings Feed */}
       {!hasSearched && (
         <>
           {/* Artists You Follow Section - Only show when logged in */}
           {user && (
-            <div className="mt-20">
-              <div className="flex items-center justify-center mb-8">
-                <h2 className="font-playful text-4xl toy-text-blue inline-block">
-                  🎨 Artists You Follow
+            <div className="mt-16">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="font-pixel text-2xl neon-text-cyan">
+                  ARTISTS YOU FOLLOW
                 </h2>
               </div>
 
               {drawingsLoading ? (
-                <div className="text-center py-12">
-                  <div className="inline-block animate-bounce">
-                    <span className="font-playful text-4xl">🎨</span>
-                  </div>
-                  <p className="font-fredoka text-xl text-gray-600 mt-4">Loading artwork...</p>
+                <div className="text-center py-8">
+                  <span className="font-arcade text-gray-400 animate-pulse">LOADING...</span>
                 </div>
               ) : followingDrawings.length === 0 ? (
-                <div className="sticker-border p-12 text-center max-w-2xl mx-auto">
-                  <p className="font-fredoka text-xl text-gray-600 mb-4">
-                    No drawings from artists you follow yet!
-                  </p>
-                  <p className="font-fredoka text-lg text-gray-500">
-                    Follow some artists to see their awesome work here! 🌟
+                <div className="retro-card neon-border-purple p-8 text-center">
+                  <p className="font-arcade text-gray-400">
+                    NO DRAWINGS FROM ARTISTS YOU FOLLOW YET
                   </p>
                 </div>
               ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-                  {followingDrawings.map((drawing, index) => (
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {followingDrawings.map((drawing) => (
                     <div
                       key={drawing.id}
                       onClick={() => router.push(`/art/${drawing.id}`)}
-                      className="drawing-card cursor-pointer bounce-in"
-                      style={{ animationDelay: `${index * 0.05}s` }}
+                      className="retro-card p-2 cursor-pointer group"
                     >
-                      <div className="relative aspect-square overflow-hidden">
+                      <div className="relative aspect-square rounded overflow-hidden mb-2">
                         <Image
                           src={drawing.imageUrl}
                           alt="Fan drawing"
                           fill
-                          className="object-cover"
+                          className="object-cover group-hover:scale-105 transition-transform"
                         />
                       </div>
-                      <div className="p-3 space-y-2">
-                        <p className="font-fredoka font-semibold text-sm text-toy-blue line-clamp-1">
+                      <div className="space-y-1">
+                        <p className="font-arcade text-xs text-white line-clamp-1 group-hover:text-neon-cyan transition-colors">
                           {drawing.game?.name || 'Unknown Game'}
                         </p>
                         <div className="flex items-center justify-between">
-                          <p className="font-fredoka text-xs text-gray-600">
+                          <p className="font-arcade text-xs text-gray-500">
                             by {drawing.author?.username || 'Unknown'}
                           </p>
                           <button
@@ -261,12 +245,12 @@ export default function HomePage() {
                               e.stopPropagation();
                               handleLikeDrawing(drawing.id, drawing.isLiked, true);
                             }}
-                            className={`font-fredoka text-lg flex items-center gap-1 transition-all ${
-                              drawing.isLiked ? 'text-toy-red scale-110' : 'text-gray-400 hover:text-toy-red hover:scale-110'
+                            className={`font-arcade text-xs flex items-center gap-1 transition-colors ${
+                              drawing.isLiked ? 'text-neon-pink' : 'text-gray-500 hover:text-neon-pink'
                             }`}
                           >
-                            <span>{drawing.isLiked ? '❤️' : '🤍'}</span>
-                            <span className="text-xs">{drawing.likes > 0 && drawing.likes}</span>
+                            <span className="text-sm">{drawing.isLiked ? '♥' : '♡'}</span>
+                            {drawing.likes > 0 && drawing.likes}
                           </button>
                         </div>
                       </div>
@@ -278,52 +262,45 @@ export default function HomePage() {
           )}
 
           {/* Famous Drawings Section - Always show */}
-          <div className="mt-20 mb-12">
-            <div className="flex items-center justify-center mb-8">
-              <h2 className="font-playful text-4xl toy-text-red inline-block">
-                ⭐ Famous Drawings
+          <div className="mt-16">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="font-pixel text-2xl neon-text-pink">
+                FAMOUS DRAWINGS
               </h2>
             </div>
 
             {drawingsLoading ? (
-              <div className="text-center py-12">
-                <div className="inline-block animate-bounce">
-                  <span className="font-playful text-4xl">⭐</span>
-                </div>
-                <p className="font-fredoka text-xl text-gray-600 mt-4">Loading artwork...</p>
+              <div className="text-center py-8">
+                <span className="font-arcade text-gray-400 animate-pulse">LOADING...</span>
               </div>
             ) : hotDrawings.length === 0 ? (
-              <div className="sticker-border p-12 text-center max-w-2xl mx-auto">
-                <p className="font-fredoka text-xl text-gray-600 mb-4">
-                  No drawings yet - Be the first to post! 🎨
-                </p>
-                <p className="font-fredoka text-lg text-gray-500">
-                  Share your amazing game art with the community!
+              <div className="retro-card neon-border-purple p-8 text-center">
+                <p className="font-arcade text-gray-400">
+                  NO DRAWINGS YET - BE THE FIRST TO POST!
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-                {hotDrawings.map((drawing, index) => (
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                {hotDrawings.map((drawing) => (
                   <div
                     key={drawing.id}
                     onClick={() => router.push(`/art/${drawing.id}`)}
-                    className="drawing-card cursor-pointer bounce-in"
-                    style={{ animationDelay: `${index * 0.05}s` }}
+                    className="retro-card p-2 cursor-pointer group"
                   >
-                    <div className="relative aspect-square overflow-hidden">
+                    <div className="relative aspect-square rounded overflow-hidden mb-2">
                       <Image
                         src={drawing.imageUrl}
                         alt="Fan drawing"
                         fill
-                        className="object-cover"
+                        className="object-cover group-hover:scale-105 transition-transform"
                       />
                     </div>
-                    <div className="p-3 space-y-2">
-                      <p className="font-fredoka font-semibold text-sm text-toy-blue line-clamp-1">
+                    <div className="space-y-1">
+                      <p className="font-arcade text-xs text-white line-clamp-1 group-hover:text-neon-cyan transition-colors">
                         {drawing.game?.name || 'Unknown Game'}
                       </p>
                       <div className="flex items-center justify-between">
-                        <p className="font-fredoka text-xs text-gray-600">
+                        <p className="font-arcade text-xs text-gray-500">
                           by {drawing.author?.username || 'Unknown'}
                         </p>
                         <button
@@ -331,12 +308,12 @@ export default function HomePage() {
                             e.stopPropagation();
                             handleLikeDrawing(drawing.id, drawing.isLiked, false);
                           }}
-                          className={`font-fredoka text-lg flex items-center gap-1 transition-all ${
-                            drawing.isLiked ? 'text-toy-red scale-110' : 'text-gray-400 hover:text-toy-red hover:scale-110'
+                          className={`font-arcade text-xs flex items-center gap-1 transition-colors ${
+                            drawing.isLiked ? 'text-neon-pink' : 'text-gray-500 hover:text-neon-pink'
                           }`}
                         >
-                          <span>{drawing.isLiked ? '❤️' : '🤍'}</span>
-                          <span className="text-xs">{drawing.likes > 0 && drawing.likes}</span>
+                          <span className="text-sm">{drawing.isLiked ? '♥' : '♡'}</span>
+                          {drawing.likes > 0 && drawing.likes}
                         </button>
                       </div>
                     </div>
@@ -347,7 +324,6 @@ export default function HomePage() {
           </div>
         </>
       )}
-      </div>
-    </>
+    </div>
   );
 }
